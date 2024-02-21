@@ -38,7 +38,7 @@ namespace Domain
         /// <summary>
         /// ID of the user who assigned the task.
         /// </summary>
-        public string AssignedById { get; set; }
+        public string AssignedBy { get; set; }
 
         /// <summary>
         /// Task Due Date
@@ -58,6 +58,5 @@ namespace Domain
         /// </summary>
         public ICollection<Comment> Comments { get; set; } = null!;
     }
-
 
 }

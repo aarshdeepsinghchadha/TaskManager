@@ -9,16 +9,7 @@ namespace Domain
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
-     
 
-      //  public string ConfirmPassword { get; set; }
-
-        /// <summary>
-        /// Navigation property  
-        /// </summary>
         public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }
-
-

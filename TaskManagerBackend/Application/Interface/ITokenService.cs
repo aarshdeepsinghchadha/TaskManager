@@ -1,7 +1,4 @@
-﻿
-using Application.Common;
-using Application.TaskManager;
-using Domain;
+﻿using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +9,7 @@ namespace Application.Interface
 {
     public interface ITokenService
     {
-        Task<string> GenerateTokenAsync(string username, string password);
-        Task<ReturnResponse<RefreshToken>> SetRefreshToken(AppUser user, string token);
-        Task<ReturnResponse<HeaderReturnDto>> DecodeGeneratedToken(string token);
-        Task<ReturnResponse<HeaderReturnDto>> DecodeRefreshToken(string expiredToken);
-
-
+        Task<string> GenerateLoginToken(string username, string password);
+        Task<RefreshToken> SetRefreshToken(AppUser user, string token);
     }
-
 }

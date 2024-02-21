@@ -15,6 +15,6 @@ namespace Application.Task
         public Guid CategoryId { get; set; }
         public string AssignedBy { get; set; }
         public DateTime DueDate { get; set; }
-      
+        public string UserId { get; set; }
     }
 }

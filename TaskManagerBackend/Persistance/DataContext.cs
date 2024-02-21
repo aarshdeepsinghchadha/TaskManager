@@ -8,20 +8,13 @@ namespace Persistance
     {
         public DataContext(DbContextOptions options) : base(options)
         {
-
         }
-
-        public DataContext()
-        {
-            
-        }
-
 
         public DbSet<TaskEntity> TaskEntities { get; set; }
         public DbSet<TaskCategory> TaskCategories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder) 
         {
             base.OnModelCreating(builder);
             // Define relationships and configurations here
@@ -47,7 +40,7 @@ namespace Persistance
             builder.Entity<BaseEntity>()
                 .HasOne(b => b.DeletedByAppUser)
                 .WithMany()
-                .HasForeignKey(b => b.DeletedById)
+                .HasForeignKey(b => b.DeletedBy)
                 .OnDelete(DeleteBehavior.NoAction);
 
             // Relationship between TaskEntity and TaskCategory
@@ -58,11 +51,19 @@ namespace Persistance
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Relationship between TaskEntity and AppUser (AssignedByAppUser)
+            //builder.Entity<TaskEntity>()
+            //    .HasOne(t => t.AssignedByAppUser)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.AssignedBy)
+            //    .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<TaskEntity>()
-                .HasOne(t => t.AssignedByAppUser)
-                .WithMany()
-                .HasForeignKey(t => t.AssignedById)
-                .OnDelete(DeleteBehavior.Cascade);
+    .HasOne(t => t.AssignedByAppUser)
+    .WithMany()
+    .HasForeignKey(t => t.AssignedBy)  // Assuming AssignedBy is a string
+    .IsRequired(false)  // To allow null values for tasks not assigned yet
+    .OnDelete(DeleteBehavior.Restrict);  // Or set to .Cascade if you want to delete tasks when the assigning user is deleted
+
 
             // Relationship between Comment and TaskEntity
             builder.Entity<Comment>()
@@ -85,5 +86,4 @@ namespace Persistance
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
-
 }

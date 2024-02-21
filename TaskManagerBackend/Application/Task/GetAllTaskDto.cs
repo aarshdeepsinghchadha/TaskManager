@@ -9,7 +9,7 @@ namespace Application.Task
     public class GetAllTaskDto
     {
         public string TaskName { get; set; }
-        public string TaskPriority { get; set; }
+        public int TaskPriority { get; set; }
         public int Status { get; set; }
         public string TaskDescription { get; set; }
         public Guid CategoryId { get; set; }

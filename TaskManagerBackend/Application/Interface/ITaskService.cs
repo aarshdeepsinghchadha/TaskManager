@@ -10,11 +10,10 @@ namespace Application.Interface
 {
     public interface ITaskService
     {
-        Task<ReturnResponse> AddTaskAsync(AddTaskDto taskDto, string authorizationToken);
-        Task<ReturnResponse> EditTaskAsync(Guid taskId, EditTaskDto taskDto , string authorizationToken);
-        Task<ReturnResponse> GetTaskByIdAsync(Guid taskId , string authorizationToken);
-        Task<ReturnResponse> GetAllTasksAsync(string authorizationToken);
-        Task<ReturnResponse> DeleteTaskAsync(Guid taskId, string authorizationToken);
-        Task<PagedResponse<List<GetTaskListingDto>>> GetTaskListing(string sortColumn, int sortDirection , int pageNumber , int pageSize , string authorizationToken);
+        Task<ReturnResponse> AddTaskAsync(AddTaskDto taskDto);
+        Task<ReturnResponse> UpdateTaskAsync(Guid taskId, EditTaskDto taskDto);
+        Task<ReturnResponse> GetTaskByIdAsync(Guid taskId);
+        Task<ReturnResponse> GetAllTasksAsync();
+        Task<ReturnResponse> DeleteTaskAsync(Guid taskId, string userId);
     }
 }

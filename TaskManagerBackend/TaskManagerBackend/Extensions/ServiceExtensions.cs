@@ -21,7 +21,7 @@ namespace TaskManagerBackend.Extensions
                 .AddDefaultTokenProviders();
 
             // Add your custom services here
-            services.AddScoped<ITaskManagerService, TaskManagerService>();
+            services.AddScoped<IRegisterLoginService, RegisterLoginService>();
             services.AddScoped<IResponseGeneratorService, ResponseGeneratorService>();
 
             // Add other services as needed

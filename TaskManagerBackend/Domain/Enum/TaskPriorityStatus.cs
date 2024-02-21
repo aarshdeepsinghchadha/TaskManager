@@ -8,8 +8,8 @@ namespace Domain.Enum
 {
     public enum TaskPriorityStatus
     {
-        Low,
         High,
+        Low,
         Critical
     }
 }

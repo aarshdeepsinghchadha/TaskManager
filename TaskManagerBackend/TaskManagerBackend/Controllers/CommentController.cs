@@ -1,7 +1,5 @@
 ﻿using Application.Comment;
 using Application.Interface;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +7,6 @@ namespace TaskManagerBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class CommentController : ControllerBase
     {
         private readonly ICommentService _commentService;
@@ -19,38 +16,38 @@ namespace TaskManagerBackend.Controllers
             _commentService = commentService;
         }
 
-        [HttpPost("Comment")]
-        public async Task<IActionResult> AddComment([FromBody] AddCommentDto commentDto , [FromHeader(Name = "Authorization")] string authorizationToken)
+        [HttpPost]
+        public async Task<IActionResult> AddComment([FromBody] AddCommentDto commentDto)
         {
-            var result = await _commentService.AddCommentAsync(commentDto, authorizationToken);
+            var result = await _commentService.AddCommentAsync(commentDto);
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("Comment/{commentId}")]
-        public async Task<IActionResult> UpdateComment(Guid commentId, [FromBody] EditCommentDto commentDto , [FromHeader(Name = "Authorization")] string authorizationToken)
+        [HttpPut("{commentId}")]
+        public async Task<IActionResult> UpdateComment(Guid commentId, [FromBody] EditCommentDto commentDto)
         {
-            var result = await _commentService.UpdateCommentAsync(commentId, commentDto , authorizationToken);
+            var result = await _commentService.UpdateCommentAsync(commentId, commentDto);
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("Comment/{commentId}")]
-        public async Task<IActionResult> GetCommentById(Guid commentId, [FromHeader(Name = "Authorization")] string authorizationToken)
+        [HttpGet("{commentId}")]
+        public async Task<IActionResult> GetCommentById(Guid commentId)
         {
-            var result = await _commentService.GetCommentByIdAsync(commentId, authorizationToken);
+            var result = await _commentService.GetCommentByIdAsync(commentId);
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("Comment")]
-        public async Task<IActionResult> GetAllComments([FromHeader(Name = "Authorization")] string authorizationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetAllComments()
         {
-            var result = await _commentService.GetAllCommentsAsync(authorizationToken);
+            var result = await _commentService.GetAllCommentsAsync();
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpDelete("Comment/{commentId}")]
-        public async Task<IActionResult> DeleteComment(Guid commentId, [FromHeader(Name = "Authorization")] string authorizationToken)
+        [HttpDelete("{commentId}")]
+        public async Task<IActionResult> DeleteComment(Guid commentId, [FromQuery] string userId)
         {
-            var result = await _commentService.DeleteCommentAsync(commentId, authorizationToken);
+            var result = await _commentService.DeleteCommentAsync(commentId, userId);
             return StatusCode(result.StatusCode, result);
         }
     }

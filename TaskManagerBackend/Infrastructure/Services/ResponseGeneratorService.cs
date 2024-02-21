@@ -30,20 +30,6 @@ namespace Infrastructure.Services
                 Data = data
             };
         }
-
-        public async Task<PagedResponse<T>> GenerateResponseAsync<T>(bool status, int statusCode, string message, T data, int pageNumber, int pageSize, int totalRecords)
-        {
-            return new PagedResponse<T>( data, pageNumber, pageSize)
-            {
-                Status = status,
-                StatusCode = statusCode,
-                Message = message,
-                Data = data,
-                PageNumber =  pageNumber ,
-                PageSize = pageSize ,
-                TotalRecords = totalRecords
-            };
-        }
     }
 
 }

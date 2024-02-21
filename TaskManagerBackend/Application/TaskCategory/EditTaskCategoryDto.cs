@@ -10,6 +10,6 @@ namespace Application.TaskCategory
     {
         public string CategoryName { get; set; }
         public string CategoryDescription { get; set; }
-       
+        public string UserId { get; set; }
     }
 }

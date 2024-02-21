@@ -9,9 +9,8 @@ namespace Application.Comment
     public class AddCommentDto
     {
         public string CommentDescription { get; set; }
-
-       // public string CommentedById { get; set; }
+        public string CommentedById { get; set; }
         public Guid TaskId { get; set; }
-       
+        public string UserId { get; set; }
     }
 }

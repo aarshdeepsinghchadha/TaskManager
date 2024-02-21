@@ -12,9 +12,5 @@ namespace Application.Interface
         Task<ReturnResponse> GenerateResponseAsync(bool status, int statusCode, string message);
 
         Task<ReturnResponse<T>> GenerateResponseAsync<T>(bool status, int statusCode, string message, T data);
-
-        Task<PagedResponse<T>> GenerateResponseAsync<T>(bool status, int statusCode, string message, T data ,int pageNumber , int pageSize , int totalRecords);
-
-
     }
 }

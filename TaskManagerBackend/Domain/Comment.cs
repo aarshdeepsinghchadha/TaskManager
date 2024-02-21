@@ -36,5 +36,4 @@ namespace Domain
         /// </summary>
         public AppUser CommentedAppUser { get; set; }
     }
-
 }

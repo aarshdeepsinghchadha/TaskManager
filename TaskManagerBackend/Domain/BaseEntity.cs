@@ -34,7 +34,7 @@ namespace Domain
         /// <summary>
         /// ID of the user who deleted the entity
         /// </summary>
-        public string? DeletedById { get; set; }
+        public string? DeletedBy { get; set; }
 
         /// Navigation properties to link to AppUser
 
@@ -51,5 +51,4 @@ namespace Domain
         /// </summary>
         public AppUser? DeletedByAppUser { get; set; }
     }
-
 }

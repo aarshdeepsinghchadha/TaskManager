@@ -10,10 +10,10 @@ namespace Application.Interface
 {
     public interface ICommentService
     {
-        Task<ReturnResponse> AddCommentAsync(AddCommentDto commentDto , string authorizationToken);
-        Task<ReturnResponse> UpdateCommentAsync(Guid commentId, EditCommentDto commentDto , string authorizationToken);
-        Task<ReturnResponse> GetCommentByIdAsync(Guid commentId , string authorizationToken);
-        Task<ReturnResponse> GetAllCommentsAsync(string authorizationToken);
-        Task<ReturnResponse> DeleteCommentAsync(Guid commentId, string authorizationToken);
+        Task<ReturnResponse> AddCommentAsync(AddCommentDto commentDto);
+        Task<ReturnResponse> UpdateCommentAsync(Guid commentId, EditCommentDto commentDto);
+        Task<ReturnResponse> GetCommentByIdAsync(Guid commentId);
+        Task<ReturnResponse> GetAllCommentsAsync();
+        Task<ReturnResponse> DeleteCommentAsync(Guid commentId, string userId);
     }
 }

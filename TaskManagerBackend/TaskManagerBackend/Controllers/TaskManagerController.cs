@@ -1,9 +1,5 @@
-﻿using Application.Interface;
-using Application.TaskManager;
-using Infrastructure.Services;
-using log4net;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Application.AppUserDto;
+using Application.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TaskManagerBackend.Controllers
@@ -11,49 +7,34 @@ namespace TaskManagerBackend.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class TaskManagerController : ControllerBase
-    { 
-        private readonly ITokenService _tokenService;
-        private readonly ITaskManagerService _taskManagerService;
-        private readonly ILogger<TaskManagerController> _logger;
-        private readonly ILog _log;
+    {
+        private readonly IRegisterLoginService _registerLoginService;
 
-        public TaskManagerController(ITokenService tokenService, ITaskManagerService taskManagerService, ILogger<TaskManagerController> logger)
+        public TaskManagerController(IRegisterLoginService registerLoginService)
         {
-            _tokenService = tokenService;
-            _taskManagerService = taskManagerService;
-            _logger = logger;
-            _log = LogManager.GetLogger(typeof(TaskManagerController));
+            _registerLoginService = registerLoginService;
         }
 
-        [HttpPost("Refresh")]
-        public async Task<IActionResult> RefreshToken(TokenResponseDto tokenResponseDto)
-        {
-            var result = await _taskManagerService.GenerateNewRefreshToken(tokenResponseDto);
-            return StatusCode(result.StatusCode, result);
-        }
-
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-           // var origin = Request.Headers["origin"];
-            var result = await _taskManagerService.RegisterUserAsync(registerDto);
-             
+            var result = await _registerLoginService.RegisterUserAsync(registerDto);
+
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var result = await _taskManagerService.LoginUserAsync(loginDto);
+            var result = await _registerLoginService.LoginUserAsync(loginDto);
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [Authorize]
-        [HttpDelete("User/{id}")]
-        public async Task<IActionResult> DeleteUser(string id , [FromHeader(Name = "Authorization")] string authorizationToken)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            var result = await _taskManagerService.DeleteUserAsync(id , authorizationToken);
+            var result = await _registerLoginService.DeleteUserAsync(id);
             if (result.Status)
             {
                 return Ok(result);
@@ -63,38 +44,5 @@ namespace TaskManagerBackend.Controllers
                 return BadRequest(result);
             }
         }
-        [AllowAnonymous]
-        [HttpGet("VerifyEmail")]
-        public async Task<IActionResult> VerifyEmail([FromQuery(Name = "email")] string email,[FromQuery(Name = "token")] string token)
-        {
-            var result = await _taskManagerService.VerifyEmailAsync(email, token);
-            return StatusCode(result.StatusCode, result);
-        }
-
-        [HttpPost("ResendEmailVerificationLink")]
-        public async Task<IActionResult> ResendEmailVerificationLink([FromBody] ResendEmailVerificationLinkDto resendEmailVerificationLinkDto)
-        {
-            //var origin = Request.Headers["origin"];
-            var result = await _taskManagerService.ResendEmailVerificationLinkAsync(resendEmailVerificationLinkDto);
-            return StatusCode(result.StatusCode, result);
-        }
-
-
-
-        [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPasswordGenerateOTP([FromBody] ForgotPasswordGenerateOTPDto forgotPasswordGenerateOTPDto)
-        {
-            var result = await _taskManagerService.ForgotPasswordGenerateOTPAsync(forgotPasswordGenerateOTPDto);
-            return StatusCode(result.StatusCode, result);
-        }
-
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPasswordWithOTP([FromBody] ResetPasswordDto resetPasswordDto)
-        {
-            var result = await _taskManagerService.ResetPasswordWithOTPAsync(resetPasswordDto);
-            return StatusCode(result.StatusCode, result);
-        }
-
-
     }
 }
